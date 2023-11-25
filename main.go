@@ -13,9 +13,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	orderRepository := &database.OrderRepository{
-		Db: db,
-	}
+	defer db.Close()
+	orderRepository := database.NewOrderRepository(db)
 	uc := usecase.NewCalculateFinalPrince(orderRepository)
 
 	input := usecase.OrderInput{
